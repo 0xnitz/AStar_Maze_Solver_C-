@@ -30,13 +30,6 @@ int main() {
 
     std::cout << "Solving Maze..." << "\r\n";
     std::list<Position> path = astar(maze, start, end);
-
-    std::cout << "Success! Drawing..." << "\r\n";
-
-    int display;
-    std::cout << "Do You Want To See a Solution? 0 For No" << "\r\n";
-    std::cin >> display; 
-    if (display) display_path(maze, path);
 }
 
 std::list<Position> astar(int maze[SIZE][SIZE], Position start, Position end) {
@@ -75,6 +68,7 @@ std::list<Position> astar(int maze[SIZE][SIZE], Position start, Position end) {
 
         // Add current_node to final path
         path.push_back(*current_node.position);
+        display_path(maze, path);
 
         // Found the goal
         if (current_node.position->x == end_node.position->x && current_node.position->y == end_node.position->y) {
@@ -197,28 +191,23 @@ void display_path(int maze[SIZE][SIZE], std::list<Position> path) {
     std::list<Position>::iterator node = path.begin();
     std::system("clear");
 
-    for (frame = 0; node != path.end(); node++) {
-        for (i = 0; i < SIZE; i++) {
-            std::cout << "|";
+    for (i = 0; i < SIZE; i++) {
+        std::cout << "|";
 
-            for (j = 0; j < SIZE; j++) {
-                if (maze[i][j])
-                    std::cout << "#";
-                else {
-                    Position current(i, j);
-                    int index = get_index(path, current);
+        for (j = 0; j < SIZE; j++) {
+            if (maze[i][j])
+                std::cout << "#";
+            else {
+                Position current(i, j);
+                int index = get_index(path, current);
 
-                    if (std::find(path.begin(), path.end(), current) != path.end() && index != -1 && index < frame)
-                        std::cout << "\033[1;31m*\033[0m";
-                    else
-                        std::cout << " ";
-                }
+                if (std::find(path.begin(), path.end(), current) != path.end())
+                    std::cout << "\033[1;31m*\033[0m";
+                else
+                    std::cout << " ";
             }
-            std::cout << "|\r\n";
         }
-
-        usleep(200000);
-        std::system("clear");
-        frame++;
+        std::cout << "|\r\n";
     }
+    usleep(200000);
 }
