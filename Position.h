@@ -17,9 +17,4 @@ public:
         x = other.x;
         y = other.y;
     }
-
-    // The == operator that checks if two position are identical 
-    bool operator==(const Position other) const {
-        return x == other.x && y == other.y;
-    }
 };

@@ -71,7 +71,7 @@ std::list<Position> astar(int maze[SIZE][SIZE], Position start, Position end) {
         display_path(maze, path);
 
         // Found the goal
-        if (current_node.position->x == end_node.position->x && current_node.position->y == end_node.position->y) {
+        if (current_node == end_node) {
             return path;
         }
 

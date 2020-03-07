@@ -29,6 +29,6 @@ public:
 
     // The == operator checks if two nodes are identical by comparing their positions
     bool operator==(const Node other) const {
-        return position == other.position;
+        return position->x == other.position->x && position->y == other.position->y;
     }
 };
